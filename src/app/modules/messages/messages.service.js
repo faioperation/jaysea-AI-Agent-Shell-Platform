@@ -138,7 +138,9 @@ export const MessageService = {
         conversation_id: targetInstanceId,
       });
 
-      console.log("AI API Response:", response.data);
+      
+
+      console.log("AI API Response:", response.data , "User data" , owner.id);
 
       // Extract the nested data object based on the observed response structure: response.data.data.data
       const responseData = response.data?.data?.data || response.data?.data || response.data;
