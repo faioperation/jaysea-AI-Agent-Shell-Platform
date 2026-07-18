@@ -1,7 +1,15 @@
 import axios from 'axios';
 import { getToken, getRefreshToken, setToken, clearAuth } from '../utils/cookie';
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://172.252.13.97:8004/api';
+// C-01 FIX: NEXT_PUBLIC_API_URL must be set — never fall back to a hardcoded IP.
+// Set this in .env.local (dev) or as a build argument in Docker (production).
+if (!process.env.NEXT_PUBLIC_API_URL && typeof window === 'undefined') {
+  throw new Error(
+    '[axios.js] NEXT_PUBLIC_API_URL is not set. ' +
+    'Create a .env.local file with NEXT_PUBLIC_API_URL=http://localhost:8001/api'
+  );
+}
+const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost/api';
 
 const axiosInstance = axios.create({
   baseURL,
